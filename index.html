@@ -13,16 +13,23 @@
 
   <style>
     .text-maroon-700 { color: #8a100b; }
-
+  
     body {
-      background-image: url('https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif');
+      background-color: #000; 
       
+      background-image: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif');      
       background-size: cover; 
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  
+    .bg-white\/90, .bg-white\/95 {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
   </style>
 </head>
@@ -48,7 +55,7 @@
       { q: "How big is your ideal friend group?", options: ["1‑2 close friends", "Small group", "The more the merrier"] },
       { q: "How important is having the same political views?", options: ["Very important", "A little important", "Doesn’t matter"] },
       { q: "How would you label your political views?", options: ["Very left-leaning", "Liberal", "Moderate", "Conservative", "Very right-leaning"]},
-      { q: "Would you like your friend match to be the same gender as you?", options: ["Yes", "Doesn't matter", "No"]},
+      { q: "Would you like your new friend to be the same gender as you?", options: ["Yes", "Doesn't matter", "No"]},
       { q: "What is your gender identity?", options: ["Woman", "Man", "Nonbinary", "Other"]}
     ];
 
@@ -112,21 +119,26 @@
           <AnimatePresence mode="wait">
             
             {stage === "welcome" && (
-              <motion.div 
-                key="welcome" 
-                initial={{ opacity: 0, scale: 0.9 }} 
-                animate={{ opacity: 1, scale: 1 }} 
-                exit={{ opacity: 0 }}
-                className="bg-white/90 p-10 rounded-3xl shadow-2xl flex flex-col items-center justify-center max-w-2xl"
-              >
-                <h1 className="text-6xl font-extrabold mb-8 text-maroon-700">Friendship Pact</h1>
-                <button 
-                    onClick={startQuiz} 
-                    className="w-48 h-16 bg-yellow-500 text-white font-bold text-3xl rounded-full shadow-lg hover:bg-yellow-600 transition-all flex items-center justify-center mx-auto hover:scale-105"
+                <motion.div 
+                    key="welcome" 
+                    initial={{ opacity: 0, scale: 0.9 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    exit={{ opacity: 0 }}
+                    className="bg-white/90 p-10 rounded-3xl shadow-2xl flex flex-col items-center justify-center max-w-2xl mx-4"
                 >
-                    Begin
-                </button>
-              </motion.div>
+                    <h1 className="text-6xl font-extrabold mb-4 text-maroon-700">Friendship Pact</h1>
+    
+                    <p className="text-xl text-gray-600 mb-8 max-w-md">
+                    Fill out this quick questionnaire to get matched with a new friend at Boston College!
+                    </p>
+
+                    <button 
+                        onClick={startQuiz} 
+                        className="w-48 h-16 bg-yellow-500 text-white font-bold text-3xl rounded-full shadow-lg hover:bg-yellow-600 transition-all flex items-center justify-center mx-auto hover:scale-105"
+                    >
+                        Begin
+                    </button>
+                </motion.div>
             )}
 
             {stage === "questions" && (
