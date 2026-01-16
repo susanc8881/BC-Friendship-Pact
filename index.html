@@ -4,16 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Friendship Pact</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <style>
     .text-maroon-700 { color: #8a100b; }
+
+    body {
+      background-image: url('https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif');
+      
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
   </style>
 </head>
-<body class="bg-gray-50">
+<body>
+  
   <div id="root"></div>
 
   <script type="text/babel">
@@ -22,15 +36,15 @@
 
     const QUESTIONS = [
       { q: "What kind of hangouts do you enjoy most?", options: ["Game night", "Coffee chat", "Workout buddy", "Study sesh", "Movie night"] },
-      { q: "What's your ideal weekend?", options: ["Exploring Boston", "Relaxing indoors", "Volunteering", "Sports games", "No plans are the best plans"] },
-      { q: "How do you prefer to communicate with friends?", options: ["Texting", "Calling", "In‑person", "Group chat", "Memes only"] },
+      { q: "What's your ideal weekend?", options: ["Exploring Boston", "Bedrotting", "Volunteering", "Sports games", "Catching up on schoolwork"] },
+      { q: "How do you prefer to communicate with friends?", options: ["Texting", "Calling", "In‑person", "Group chat", "Memes"] },
       { q: "Morning or night person?", options: ["Early bird", "Night owl", "Depends"] },
-      { q: "What type of clubs are you into?", options: ["Cultural", "Service", "Arts & media", "STEM", "Career-Oriented"] },
-      { q: "What's your favorite place to study?", options: ["Library", "Dorm", "Dining Hall", "Outdoors"] },
+      { q: "What type of clubs are you interested in?", options: ["Cultural", "Service", "Artistic", "STEM", "Career-Oriented"] },
+      { q: "What's your favorite place to study?", options: ["Library", "Dorm", "Outdoors", "I don't study"] },
       { q: "What's your personality type?", options: ["Introvert", "Ambivert", "Extravert"] },
       { q: "How spontaneous are you?", options: ["Very", "Somewhat", "Little", "Not at all"] },
-      { q: "Favorite BC tradition?", options: ["Mudstock/Modstock", "Beanpot", "Marmon", "Red Bandana Game", "Other"] },
-      { q: "How do you unwind?", options: ["Music", "Movies", "Reading", "Gym", "Arts & Crafts"] },
+      { q: "Favorite BC tradition?", options: ["Mudstock/Modstock", "Beanpot", "Marmon", "Red Bandana Game", "Stokes Set"] },
+      { q: "How do you unwind?", options: ["Music", "Movies", "Reading", "Gym", "Arts & Crafts", "Journaling"] },
       { q: "How big is your ideal friend group?", options: ["1‑2 close friends", "Small group", "The more the merrier"] },
       { q: "How important is having the same political views?", options: ["Very important", "A little important", "Doesn’t matter"] },
       { q: "How would you label your political views?", options: ["Very left-leaning", "Liberal", "Moderate", "Conservative", "Very right-leaning"]},
@@ -96,11 +110,21 @@
       return (
         <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
           <AnimatePresence mode="wait">
+            
             {stage === "welcome" && (
-              <motion.div key="welcome" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <h1 className="text-5xl font-extrabold mb-6 text-maroon-700">Friendship Pact</h1>
-                <button onClick={startQuiz} className="px-10 py-4 bg-yellow-500 text-white font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-all">
-                  Begin
+              <motion.div 
+                key="welcome" 
+                initial={{ opacity: 0, scale: 0.9 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                exit={{ opacity: 0 }}
+                className="bg-white/90 p-10 rounded-3xl shadow-2xl flex flex-col items-center justify-center max-w-2xl"
+              >
+                <h1 className="text-6xl font-extrabold mb-8 text-maroon-700">Friendship Pact</h1>
+                <button 
+                    onClick={startQuiz} 
+                    className="w-48 h-16 bg-yellow-500 text-white font-bold text-3xl rounded-full shadow-lg hover:bg-yellow-600 transition-all flex items-center justify-center mx-auto hover:scale-105"
+                >
+                    Begin
                 </button>
               </motion.div>
             )}
@@ -108,22 +132,30 @@
             {stage === "questions" && (
               <motion.div 
                 key={`question-${currentQuestionIndex}`}
-                initial={{ opacity: 0, x: 20 }} 
+                initial={{ opacity: 0, x: 50 }} 
                 animate={{ opacity: 1, x: 0 }} 
-                exit={{ opacity: 0, x: -20 }}
+                exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.4 }}
-                className="w-full max-w-md"
+                className="w-full max-w-md bg-white/95 p-8 rounded-3xl shadow-2xl"
               >
-                <span className="text-sm font-semibold text-gray-400">
+                <div className="w-full h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
+                  <motion.div 
+                    className="h-full bg-[#8a100b]" 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${((currentQuestionIndex + 1) / QUESTIONS.length) * 100}%` }}
+                  />
+                </div>
+
+                <span className="text-sm font-semibold text-gray-400 uppercase tracking-widest">
                   Question {currentQuestionIndex + 1} of {QUESTIONS.length}
                 </span>
-                <h2 className="text-2xl font-bold mt-2 mb-8">{QUESTIONS[currentQuestionIndex].q}</h2>
+                <h2 className="text-2xl font-bold mt-2 mb-6 text-gray-800">{QUESTIONS[currentQuestionIndex].q}</h2>
                 <div className="flex flex-col gap-3">
                   {QUESTIONS[currentQuestionIndex].options.map((option) => (
                     <button 
                       key={option} 
                       onClick={() => handleAnswer(option)} 
-                      className="px-6 py-3 border-2 border-gray-200 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left"
+                      className="px-6 py-3 border-2 border-gray-200 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left font-medium text-gray-700 hover:text-black"
                     >
                       {option}
                     </button>
@@ -139,29 +171,35 @@
                 animate={{ opacity: 1, y: 0 }} 
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-sm"
+                className="w-full max-w-sm bg-white/95 p-8 rounded-3xl shadow-2xl"
               >
-                <h2 className="text-3xl font-bold mb-8 text-maroon-700">Almost there!</h2>
+                <h2 className="text-3xl font-bold mb-6 text-maroon-700">Almost there!</h2>
                 <form onSubmit={handleFormSubmit} className="flex flex-col gap-4 text-left">
-                  <input required placeholder="First Name" className="w-full p-3 bg-white border rounded-lg" onChange={(e) => setFormData({...formData, firstName: e.target.value})} />
-                  <input required placeholder="Last Name" className="w-full p-3 bg-white border rounded-lg" onChange={(e) => setFormData({...formData, lastName: e.target.value})} />
-                  <input required type="email" placeholder="BC Email" className="w-full p-3 bg-white border rounded-lg" onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                  <input required placeholder="First Name" className="w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none" onChange={(e) => setFormData({...formData, firstName: e.target.value})} />
+                  <input required placeholder="Last Name" className="w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none" onChange={(e) => setFormData({...formData, lastName: e.target.value})} />
+                  <input required type="email" placeholder="BC Email" className="w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none" onChange={(e) => setFormData({...formData, email: e.target.value})} />
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
                     className={`mt-4 py-4 rounded-xl font-bold transition shadow-md ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-black text-white hover:bg-gray-800'}`}
                   >
-                    {isSubmitting ? "Submitting..." : "Submit Pact"}
+                    {isSubmitting ? "Submitting..." : "Submit"}
                   </button>
                 </form>
               </motion.div>
             )}
 
             {stage === "success" && (
-              <motion.div key="success" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+              <motion.div 
+                key="success" 
+                initial={{ scale: 0.9, opacity: 0 }} 
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white/95 p-10 rounded-3xl shadow-2xl max-w-md"
+              >
                 <div className="text-6xl mb-4">🦅</div>
-                <h2 className="text-3xl font-bold mb-4">Thank you!</h2>
-                <p>Stay alert for updates in your email!</p>
+                <h2 className="text-3xl font-bold mb-4 text-gray-800">Your new friend awaits...</h2>
+                <p className="text-gray-600 mb-2">Thank you for participating in the Friendship Pact!</p>
+                <p className="text-gray-600">Look out for updates in your email :&rpar</p>
               </motion.div>
             )}
           </AnimatePresence>
